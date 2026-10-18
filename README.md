@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ParkEase — Parking Slot Booking System
 
 A modular parking booking web application using HTML, CSS, JavaScript, Node.js, Express, PostgreSQL and optional AWS SNS notifications.
@@ -68,3 +69,6 @@ Admin routes include:
 7. Test with Razorpay's test checkout details shown in its official test-mode documentation/dashboard. No real money is charged in test mode.
 
 The backend calculates the price, creates a Razorpay order, verifies the checkout signature, checks that the payment is captured, and only then creates the booking. If payment succeeds but the slot is booked by another customer before confirmation, the app reports that situation; the payment must be reviewed/refunded by the administrator. Use HTTPS, webhook reconciliation, and operational refund handling before deploying live payments.
+=======
+# Parking-slot-booking
+>>>>>>> 137c0b8d9647511f86d5477d43a77c46aee93ce7
