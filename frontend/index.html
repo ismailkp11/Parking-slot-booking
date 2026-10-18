@@ -1,0 +1,382 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ParkEase — Parking Slot Booking</title>
+  <meta name="description" content="Book and manage parking slots quickly and easily.">
+
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="ParkEase home">
+        <span class="brand-mark">P</span>
+        <span>Park<span>Ease</span></span>
+      </a>
+
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#slots">Slots</a>
+        <a href="#booking">Book</a>
+        <a href="#manage">Manage Booking</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="admin-login-btn" id="adminLoginBtn" type="button">
+          Admin Login
+        </button>
+        <a class="nav-cta" href="#booking">Book a slot</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Hero -->
+    <section id="home" class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">SMART PARKING • SIMPLE BOOKING</div>
+
+          <h1>
+            Your parking spot,<br>
+            <span>ready when you are.</span>
+          </h1>
+
+          <p class="hero-copy">
+            Check availability, choose your slot and reserve your parking
+            space in just a few clicks.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#booking">Reserve parking</a>
+            <a class="btn btn-light" href="#slots">View available slots</a>
+          </div>
+
+          <div class="trust-row">
+            <div>
+              <strong>24/7</strong>
+              <span>Booking access</span>
+            </div>
+            <div>
+              <strong>Live</strong>
+              <span>Availability</span>
+            </div>
+            <div>
+              <strong>Safe</strong>
+              <span>Slot protection</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-card-top">
+            <div>
+              <span class="mini-label">TODAY'S PARKING</span>
+              <h3>Find your space</h3>
+            </div>
+            <div class="status-dot"><i></i> Live</div>
+          </div>
+
+          <div id="heroSlotPreview" class="hero-slots"></div>
+
+          <a class="hero-card-link" href="#slots">
+            Explore all slots →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking Steps -->
+    <section class="stats-strip">
+      <div class="container stats">
+        <div><b>01</b><span>Choose a date</span></div>
+        <div><b>02</b><span>Select a slot</span></div>
+        <div><b>03</b><span>Enter your details</span></div>
+        <div><b>04</b><span>Complete payment</span></div>
+      </div>
+    </section>
+
+    <!-- Parking Slots -->
+    <section id="slots" class="section">
+      <div class="container">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow">LIVE AVAILABILITY</div>
+            <h2>Parking slots</h2>
+            <p>Choose a date to see which spaces are busy or available.</p>
+          </div>
+
+          <div class="date-control">
+            <label for="availabilityDate">Date</label>
+            <input type="date" id="availabilityDate">
+          </div>
+        </div>
+
+        <div class="legend">
+          <span><i class="legend-dot available"></i> Available</span>
+          <span><i class="legend-dot busy"></i> Has bookings</span>
+          <span><i class="legend-dot full"></i> Fully booked</span>
+        </div>
+
+        <div id="slotGrid" class="slot-grid">
+          <div class="loading-card">Loading parking slots…</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Booking Form -->
+    <section id="booking" class="section booking-section">
+      <div class="container booking-layout">
+
+        <div class="booking-info">
+          <div class="eyebrow">QUICK RESERVATION</div>
+          <h2>Reserve your parking space.</h2>
+
+          <p>
+            Select your slot and time. The server calculates the final price
+            using the rates stored for that slot.
+          </p>
+
+          <div class="feature-list">
+            <div>
+              <span>✓</span>
+              <div>
+                <b>Overlap protected</b>
+                <small>The database prevents double booking.</small>
+              </div>
+            </div>
+
+            <div>
+              <span>✓</span>
+              <div>
+                <b>Flexible pricing</b>
+                <small>Hourly and daily pricing is calculated automatically.</small>
+              </div>
+            </div>
+
+            <div>
+              <span>✓</span>
+              <div>
+                <b>Secure payment</b>
+                <small>Pay through Razorpay Checkout.</small>
+              </div>
+            </div>
+
+            <div>
+              <span>✓</span>
+              <div>
+                <b>Confirmation</b>
+                <small>Your booking can trigger an SNS confirmation.</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <form id="bookingForm" class="booking-card">
+
+          <div class="form-head">
+            <div>
+              <span class="step">01</span>
+              <div>
+                <h3>Booking details</h3>
+                <p>Fill in your parking information.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-grid">
+
+            <label class="field full">
+              <span>Parking slot</span>
+              <select id="slotId" required>
+                <option value="">Loading slots…</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Your name</span>
+              <input
+                id="userName"
+                type="text"
+                placeholder="Enter your name"
+                maxlength="100"
+                autocomplete="name"
+                required
+              >
+            </label>
+
+            <label class="field">
+              <span>Email address</span>
+              <input
+                id="userEmail"
+                type="email"
+                placeholder="you@example.com"
+                maxlength="150"
+                autocomplete="email"
+                required
+              >
+            </label>
+
+            <label class="field">
+              <span>Start time</span>
+              <input id="startTime" type="datetime-local" required>
+            </label>
+
+            <label class="field">
+              <span>End time</span>
+              <input id="endTime" type="datetime-local" required>
+            </label>
+
+          </div>
+
+          <!-- Estimated Price -->
+          <div id="pricePreview" class="price-preview hidden">
+            <span>Estimated price</span>
+            <strong id="priceValue">—</strong>
+            <small>Final amount is calculated by the backend.</small>
+          </div>
+
+          <!-- Razorpay Payment Button -->
+          <button
+            class="btn btn-primary submit-btn"
+            type="submit"
+            id="bookBtn"
+          >
+            Continue to payment <span>→</span>
+          </button>
+
+          <!-- Payment Status -->
+          <div
+            id="paymentMessage"
+            class="form-note"
+            role="status"
+            aria-live="polite"
+          ></div>
+
+          <p class="form-note">
+            Your booking is confirmed only after the backend verifies the
+            payment and confirms the reservation.
+          </p>
+
+        </form>
+      </div>
+    </section>
+
+    <!-- Manage Booking -->
+    <section id="manage" class="section manage-section">
+      <div class="container manage-layout">
+
+        <div>
+          <div class="eyebrow">BOOKING MANAGEMENT</div>
+          <h2>Manage an existing booking.</h2>
+          <p>Enter a booking ID to view its details or cancel it.</p>
+        </div>
+
+        <div class="manage-card">
+          <div class="lookup-row">
+            <input
+              id="bookingId"
+              type="number"
+              min="1"
+              placeholder="Booking ID"
+            >
+
+            <button class="btn btn-dark" id="lookupBtn" type="button">
+              Find booking
+            </button>
+          </div>
+
+          <div id="bookingResult" class="booking-result hidden"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section faq-section">
+      <div class="container">
+
+        <div class="section-heading centered">
+          <div class="eyebrow">HOW IT WORKS</div>
+          <h2>Parking without the hassle.</h2>
+        </div>
+
+        <div class="faq-grid">
+          <article>
+            <div class="icon-box">01</div>
+            <h3>Check availability</h3>
+            <p>
+              Choose a date and check parking space availability.
+            </p>
+          </article>
+
+          <article>
+            <div class="icon-box">02</div>
+            <h3>Book your slot</h3>
+            <p>
+              Enter your details and select a start and end time.
+            </p>
+          </article>
+
+          <article>
+            <div class="icon-box">03</div>
+            <h3>Complete payment</h3>
+            <p>
+              Pay through Razorpay and check your confirmed booking ID.
+            </p>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer">
+      <div class="brand">
+        <span class="brand-mark">P</span>
+        <span>Park<span>Ease</span></span>
+      </div>
+
+      <p>Parking Slot Booking System</p>
+      <span>© 2026</span>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div id="toast" class="toast"></div>
+
+  <!-- Modal -->
+  <div id="modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-backdrop"></div>
+
+    <div class="modal-card">
+      <button
+        class="modal-close"
+        id="modalClose"
+        type="button"
+        aria-label="Close modal"
+      >×</button>
+
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- Load Razorpay before your application JavaScript -->
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+  <!-- Existing application logic -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>
+```

@@ -1,0 +1,11 @@
+const express=require('express');
+const c=require('../controllers/adminController');
+const {requireAdmin}=require('../middleware/adminAuth');
+const router=express.Router();
+router.post('/login',c.login);
+router.use(requireAdmin);
+router.get('/dashboard',c.dashboard);
+router.get('/slots',c.listSlots);router.post('/slots',c.createSlot);router.put('/slots/:id',c.updateSlot);router.delete('/slots/:id',c.deleteSlot);
+router.get('/bookings',c.listBookings);router.patch('/bookings/:id/status',c.updateBookingStatus);
+router.get('/users',c.listUsers);router.get('/reports',c.reports);router.get('/settings',c.settings);router.post('/notifications/test',c.testNotification);
+module.exports=router;
